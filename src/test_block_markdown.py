@@ -1,5 +1,5 @@
 import unittest
-from src.block_markdown import markdown_to_blocks
+from src.block_markdown import BlockType, markdown_to_blocks, block_to_block_type
 
 class TestMarkdownToBlocks(unittest.TestCase):
     def test_markdown_to_blocks(self):
@@ -46,3 +46,16 @@ Amalfi lemons are tangy
                     "_Italian_ food is very **bold** in flavor\nDaVinci often painted in `coded language`\nAmalfi lemons are tangy",
             ],
         )
+
+class TestBlockToBlockType(unittest.TestCase):
+    def test_block_to_block_type_code(self):
+        block = "```\nprint('this is some damn fine code homey')\n```"
+        bt = block_to_block_type(block)
+        self.assertEqual(bt, BlockType.CODE)
+
+    def test_block_to_block_type_heading(self):
+        block = "##\nprint('this is some damn fine code homey')\n"
+        bt = block_to_block_type(block)
+        self.assertEqual(bt, BlockType.HEADING)
+
+    
