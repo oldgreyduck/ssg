@@ -1,8 +1,8 @@
 import unittest
 from src.textnode import TextNode, TextType
-from src.split_delimiter import inline_markdown
+from src.inline_markdown import inline_markdown
 
-class TestSplitDelimiter(unittest.TestCase):
+class TestInlineMarkdown(unittest.TestCase):
     def test_simple_split(self):
         node = TextNode("a **b** c", TextType.TEXT)
         out = inline_markdown([node], "**", TextType.BOLD)
