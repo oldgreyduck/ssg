@@ -49,13 +49,31 @@ Amalfi lemons are tangy
 
 class TestBlockToBlockType(unittest.TestCase):
     def test_block_to_block_type_code(self):
-        block = "```\nprint('this is some damn fine code homey')\n```"
+        block = "```\nthis is some damn fine code homey\n```"
         bt = block_to_block_type(block)
         self.assertEqual(bt, BlockType.CODE)
 
     def test_block_to_block_type_heading(self):
-        block = "##\nprint('this is some damn fine code homey')\n"
+        block = "## this is some damn fine code homey"
         bt = block_to_block_type(block)
         self.assertEqual(bt, BlockType.HEADING)
 
-    
+    def test_block_to_block_type_quote(self):
+        block = "> this is some damn fine code homey\n> yo"
+        bt = block_to_block_type(block)
+        self.assertEqual(bt, BlockType.QUOTE)
+
+    def test_block_to_block_type_unordered(self):
+        block = "- this is some damn fine code homey\n- yo"
+        bt = block_to_block_type(block)
+        self.assertEqual(bt, BlockType.UNORDERED_LIST)
+
+    def test_block_to_block_type_ordered(self):
+        block = "1. this is some damn fine code homey\n2. yo"
+        bt = block_to_block_type(block)
+        self.assertEqual(bt, BlockType.ORDERED_LIST)
+
+    def test_block_to_block_type_paragraph(self):
+        block = "this is some damn fine code homey\nyo"
+        bt = block_to_block_type(block)
+        self.assertEqual(bt, BlockType.PARAGRAPH)
