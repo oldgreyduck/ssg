@@ -35,3 +35,27 @@ the **same** even with inline stuff
             html,
         "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
     )
+        
+    def test_heading(self):
+        md = """
+### This is some damn fine code
+"""
+
+        node = markdown_to_htmlnode(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+        "<div><h3>This is some damn fine code</h3></div>",
+    )
+        
+    def test_quote(self):
+        md = """
+> This is some **damn** _fine_ code
+"""
+
+        node = markdown_to_htmlnode(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+        "<div><blockquote>This is some <b>damn</b> <i>fine</i> code</blockquote></div>",
+    )

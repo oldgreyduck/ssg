@@ -26,5 +26,19 @@ def markdown_to_htmlnode(markdown: str):
             text = first[level + 1:]
             children = text_to_children(text)
             nodes.append(ParentNode(f"h{level}", children))
+        if block_to_block_type(block) == BlockType.QUOTE:
+            lines = block.splitlines()
+            cleaned = []
+            for line in lines:
+                rest = line
+                if rest.startswith(">"):
+                    rest = rest[1:]
+                if rest.startswith(" "):
+                    rest = rest[1:]
+                cleaned.append(rest)
+            text = " ".join(cleaned)
+            children = text_to_children(text)
+            nodes.append(ParentNode("blockquote", children))
+        
 
     return ParentNode("div", nodes)
