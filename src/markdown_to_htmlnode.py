@@ -39,6 +39,23 @@ def markdown_to_htmlnode(markdown: str):
             text = " ".join(cleaned)
             children = text_to_children(text)
             nodes.append(ParentNode("blockquote", children))
-        
+        if block_to_block_type(block) == BlockType.UNORDERED_LIST:
+            lines = block.splitlines()
+            items = []
+            for line in lines:
+                if not line.startswith("- "):
+                    continue
+                text = line[2:]
+                children = text_to_children(text)
+                items.append(ParentNode("li", children))
+            nodes.append(ParentNode("ul", items))
+        if block_to_block_type(block) == BlockType.ORDERED_LIST:
+            lines = block.splitlines()
+            items = []
+            for line in lines:
+                _, text = line.split(". ", 1)
+                children = text_to_children(text)
+                items.append(ParentNode("li", children))
+            nodes.append(ParentNode("ol", items))
 
     return ParentNode("div", nodes)

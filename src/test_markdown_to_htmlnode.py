@@ -59,3 +59,31 @@ the **same** even with inline stuff
             html,
         "<div><blockquote>This is some <b>damn</b> <i>fine</i> code</blockquote></div>",
     )
+        
+    def test_unordered(self):
+        md = """
+- This is some damn fine code
+- That **thou** hast written
+- Using _exquisite_ codemanship
+"""
+
+        node = markdown_to_htmlnode(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+        "<div><ul><li>This is some damn fine code</li><li>That <b>thou</b> hast written</li><li>Using <i>exquisite</i> codemanship</li></ul></div>",
+    )
+        
+    def test_ordered(self):
+        md = """
+1. This is some damn fine code
+2. That **thou** hast written
+3. Using _exquisite_ codemanship
+"""
+
+        node = markdown_to_htmlnode(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+        "<div><ol><li>This is some damn fine code</li><li>That <b>thou</b> hast written</li><li>Using <i>exquisite</i> codemanship</li></ol></div>",
+    )
