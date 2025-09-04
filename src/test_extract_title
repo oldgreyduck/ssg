@@ -1,0 +1,32 @@
+import unittest
+from src.extract_title import extract_title
+
+
+class TestExtractTitle(unittest.TestCase):
+    def test_heading_simple(self):
+        ex = "# Tolkien Fan Club"
+        got = extract_title(ex)
+        self.assertEqual(got, "Tolkien Fan Club")
+        
+    def test_heading_with_leading_spaces(self):
+        ex = "   # Hello"
+        got = extract_title(ex)
+        self.assertEqual(got, "Hello")
+
+    def test_ignores_h2(self):
+        ex = "## Not an h1"
+        with self.assertRaises(Exception):
+            extract_title(ex)
+
+    def test_no_space_after_hash(self):
+        ex = "#Title"
+        with self.assertRaises(Exception):
+            extract_title(ex)
+
+    def test_no_headers(self):
+        ex = "plain text"
+        with self.assertRaises(Exception):
+            extract_title(ex)
+
+if __name__ == "__main__":
+    unittest.main()
