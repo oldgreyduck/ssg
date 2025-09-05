@@ -23,6 +23,9 @@ class LeafNode(HTMLNode):
         super().__init__(tag=tag, value=value, props=props)
 
     def to_html(self):
+        if self.tag == "img":
+            attributes = self.props_to_html()
+            return f"<img{attributes}>"
         if not self.value:
             raise ValueError("LeafNode must have a value.")
         if self.tag is None:
